@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cédula de Votação</title>
+</head>
+<body>
+
+    <h1>Cédula de Votação Eletrônica</h1>
+    <hr>
+
+    {% if lista_candidatos %}
+        <h2>Escolha seu candidato:</h2>
+        
+        <form action="{% url 'processar_voto' %}" method="POST">
+            {% csrf_token %}
+            <ul>
+                {% for candidato in lista_candidatos %}
+                    <li>
+                        {{ candidato.nome }} ({{ candidato.numero }}) - 
+                        <button type="submit" name="candidato_id" value="{{ candidato.id }}">Votar</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+
+    {% else %}
+        <p>Nenhum candidato cadastrado no momento.</p>
+    {% endif %}
+
+</body>
+</html>
